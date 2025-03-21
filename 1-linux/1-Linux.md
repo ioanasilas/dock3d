@@ -226,4 +226,3 @@ Commercial support is available at
 </body>
 </html>
 ```
-![[Location-Nginx-Message.png]]
