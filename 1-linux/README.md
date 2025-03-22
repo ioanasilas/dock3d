@@ -2,7 +2,7 @@
 ## First 6 points
 First thing we need is to run an Ubuntu Container
 ```bash
-malina@hoststuff:~/tremend-task$ docker run -it ubuntu
+docker run -it ubuntu
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 5a7813e071bf: Pull complete 
