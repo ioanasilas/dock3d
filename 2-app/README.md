@@ -167,7 +167,7 @@ In the application code, we can then get the variable doing this:
 ```python
 import os
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET = os.getenv("SECRET_KEY")
 ```
 Then we rename the image and after logging in, we push it to `Dockerhub`:
 ```bash
