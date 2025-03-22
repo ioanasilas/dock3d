@@ -12,7 +12,4 @@ COPY src /app
 
 EXPOSE 8080
 
-# # to let Flask know where to look
-# ENV FLASK_APP=calculator.py
-
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "calculator:app"]
