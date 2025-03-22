@@ -3,7 +3,7 @@ import signal
 import sys
 import os
 
-SECRET = os.getenv("SECRET_KEY")
+SECRET = os.getenv("SECRET")
 
 app = Flask(__name__)
 

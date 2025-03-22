@@ -145,6 +145,7 @@ And we can access it from our browser through `http://localhost:8080/`.
 
 ## Docker stop signal + env variables
 
+### Stop signal
 To have the app catch the container's stop signal and do a clean shutdown, I added this signal handler in the application code:
 
 ```python
@@ -158,6 +159,21 @@ signal.signal(signal.SIGTERM, handle_shutdown)
 
 So that when `Docker` stops, we handle it ourselves instead of having `Gunicorn` handle it.
 
+If we run and then from another terminal we do
+```bash
+docker stop <container-name>
+```
+
+We can see that now our function handles the `SIGTERM`:
+
+```bash
+malina@hoststuff:~/tremend-task$ docker run -p 8080:8080 --env SECRET=some-secret test:latest
+...
+Gracefully shutting down
+[2025-03-22 13:13:22 +0000] [1] [INFO] Shutting down: Master
+```
+
+### Env variables
 Regarding the environmental variables, we should not hardcode them in the `Dockerfile` or application code. We can use this command to pass them:
 ```bash
 docker run -p 8080:8080 --env  SECRET=some-secret test:latest
@@ -167,9 +183,9 @@ In the application code, we can then get the variable doing this:
 ```python
 import os
 
-SECRET = os.getenv("SECRET_KEY")
+SECRET = os.getenv("SECRET")
 ```
-Then we rename the image and after logging in, we push it to `Dockerhub`:
+Then we rename the image and after logging in, we push it to `Dockerhub`:=
 ```bash
 docker push zwx13/calculator-app:final
 ```
