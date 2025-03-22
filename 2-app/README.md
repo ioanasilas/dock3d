@@ -321,4 +321,4 @@ Since the Dockerfile is not in `root`, but in a subfolder, so I modified this pa
 run: docker build 2-app -f 2-app/Dockerfile -t zwx13/calculator-app:${{ github.sha }}
 ```
 
-Then the workflow run was failing since I was not using an access token, so I generated one and updated the corresponding secret and then it worked.
+Then the workflow run was failing since I was not using an access token, so I generated one and updated the corresponding secret (DOCKER_PASSWORD) and then logging in worked and so did the whole workflow.
