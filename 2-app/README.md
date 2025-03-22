@@ -274,3 +274,51 @@ docker push zwx13/calculator-app:final
 ```
 
 ## Automation
+
+For the automation part, I went to the `GitHub` repo > Actions > Docker Image, then modified the default file provided to this:
+
+```yaml
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . -t zwx13/calculator-app:${{ github.sha }}
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: Push image
+      run: docker push zwx13/calculator-app:${{ github.sha }}
+```
+
+Then did Settings > Secrets and variables > Actions > New repository secret and added the 2 secrets.
+
+Then, encountered an error:
+```bash
+Run docker build . -t zwx13/calculator-app:188f1890bd1f7773df2d13d3a42f2d5338a5153e
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2B done
+#1 DONE 0.0s
+ERROR: failed to solve: failed to read dockerfile: open Dockerfile: no such file or directory
+Error: Process completed with exit code 1.
+```
+
+Since the Dockerfile is not in `root`, but in a subfolder, so I modified this part:
+```yaml
+run: docker build 2-app -f 2-app/Dockerfile -t zwx13/calculator-app:${{ github.sha }}
+```
+
+Then the workflow run was failing since I was not using an access token, so I generated one and updated the corresponding secret and then it worked.
