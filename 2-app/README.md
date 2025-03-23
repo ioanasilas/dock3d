@@ -94,7 +94,7 @@ docker run -p 8080:8080 test:latest
 ```
 
 and we curl, we get:
-```bash'
+```html
 curl http://localhost:8080
 
 <!DOCTYPE html>
